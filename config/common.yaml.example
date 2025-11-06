@@ -1,0 +1,78 @@
+# Posts Copilot 通用配置文件
+# 复制此文件为 common.yaml 并根据需要修改
+
+# ====== Chrome 浏览器配置 ======
+# Chrome 调试端口（保持默认即可）
+debugger_address: 127.0.0.1:9222
+
+# ChromeDriver 路径（可选，程序会自动检测）
+# service_location: /opt/homebrew/bin/chromedriver  # macOS Homebrew
+# service_location: /usr/local/bin/chromedriver     # Linux
+# service_location: C:\chromedriver\chromedriver.exe  # Windows
+
+# ====== 文章配置 ======
+# 文章存放目录（修改为你的文章目录）
+content_dir: /path/to/your/articles/
+
+# 备份目录（可选）
+# backup_dir: /path/to/backup/
+
+# 是否在文章末尾添加版权信息
+include_footer: false
+# 版权信息文件路径（如果启用）
+# footer_file: config/footer.md
+
+# ====== 发布设置 ======
+# 发布模式: false=需要确认, true=完全自动
+auto_publish: false
+
+# 登录设置
+wait_login: true
+wait_login_time: 120  # 等待登录的时间（秒）
+
+# ====== 平台开关 ======
+# 控制哪些平台启用自动发布
+enable:
+  csdn: true          # CSDN技术博客
+  juejin: true        # 稀土掘金
+  zhihu: true         # 知乎专栏
+  cto51: true         # 51CTO博客
+  alicloud: true      # 阿里云开发者社区
+  toutiao: false      # 今日头条（需要企业认证）
+  wechat: false       # 微信公众号（仅保存草稿）
+
+# ====== 日志配置 ======
+logging:
+  # 日志级别: DEBUG, INFO, WARNING, ERROR
+  level: INFO
+  # 日志文件路径
+  file: data/logs/publisher.log
+  # 是否在控制台显示日志
+  console: true
+  # 日志文件大小限制（MB）
+  max_size: 10
+  # 保留的日志文件数量
+  backup_count: 5
+
+# ====== AI 内容生成配置（可选）======
+# 如果使用 AI 生成功能，需要配置以下选项
+ai:
+  enabled: false
+  # 智谱AI API Key（需要申请）
+  # zhipu_api_key: "your_api_key_here"
+  # 生成内容的默认设置
+  default_settings:
+    max_tokens: 2000
+    temperature: 0.7
+    model: "glm-4"
+
+# ====== 高级设置 ======
+advanced:
+  # 操作超时时间（秒）
+  timeout: 30
+  # 重试次数
+  retry_times: 3
+  # 元素查找等待时间（秒）
+  wait_time: 10
+  # 是否无头模式运行（调试时建议设为 false）
+  headless: false

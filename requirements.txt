@@ -1,0 +1,13 @@
+# Core dependencies
+selenium>=4.15.0
+pyyaml>=6.0
+pyperclip>=1.8.0  
+requests>=2.31.0
+
+# Content processing
+markdown>=3.5.0
+python-frontmatter>=1.0.0
+
+# AI integration (optional)
+# Uncomment if using AI content generation features
+# zhipuai>=2.0.0
