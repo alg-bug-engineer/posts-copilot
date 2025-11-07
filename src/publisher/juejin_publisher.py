@@ -102,14 +102,28 @@ class JuejinPublisher(BasePublisher):
                 logger.error("✗ 无法点击写文章按钮")
                 return False
             
-            # 7. 切换到编辑器标签页
+            # 7. 等待新标签页打开并切换
+            time.sleep(3)  # 等待新标签页打开
+            logger.info(f"当前窗口句柄数：{len(self.driver.window_handles)}")
+            
+            # 切换到最新的标签页（编辑器页面）
             self.driver.switch_to.window(self.driver.window_handles[-1])
+            logger.info("✓ 已切换到编辑器标签页")
             time.sleep(2)
             
             # 8. 等待编辑器加载
-            wait = WebDriverWait(self.driver, 10)
-            wait.until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="输入文章标题..."]')))
-            logger.info("✓ 编辑器加载完成")
+            wait = WebDriverWait(self.driver, 20)  # 增加等待时间到20秒
+            try:
+                # 等待标题输入框出现
+                title_input = wait.until(
+                    EC.presence_of_element_located((By.XPATH, '//input[@placeholder="输入文章标题..."]'))
+                )
+                logger.info("✓ 编辑器加载完成")
+            except Exception as e:
+                logger.error(f"✗ 等待编辑器加载失败：{e}")
+                logger.info(f"当前页面 URL: {self.driver.current_url}")
+                logger.info(f"当前页面标题: {self.driver.title}")
+                return False
             
             # 9. 填充文章内容
             if not self._fill_article_content(article_path):
@@ -209,14 +223,53 @@ class JuejinPublisher(BasePublisher):
             bool: 是否成功
         """
         try:
+            # 记录点击前的窗口数量
+            windows_before = len(self.driver.window_handles)
+            logger.info(f"点击前窗口数：{windows_before}")
+            
             wait = WebDriverWait(self.driver, 10)
-            write_btn = wait.until(
-                EC.element_to_be_clickable((By.CLASS_NAME, 'send-button'))
-            )
-            write_btn.click()
-            logger.info("✓ 已点击写文章按钮")
-            time.sleep(2)
-            return True
+            
+            # 尝试多种方式定位按钮
+            write_btn = None
+            try:
+                # 方式1: 通过 class name
+                write_btn = wait.until(
+                    EC.element_to_be_clickable((By.CLASS_NAME, 'send-button'))
+                )
+                logger.info("✓ 通过 class name 找到写文章按钮")
+            except:
+                try:
+                    # 方式2: 通过 XPath 文本
+                    write_btn = wait.until(
+                        EC.element_to_be_clickable((By.XPATH, '//button[contains(text(), "写文章")]'))
+                    )
+                    logger.info("✓ 通过 XPath 找到写文章按钮")
+                except:
+                    logger.error("✗ 无法找到写文章按钮")
+                    return False
+            
+            if write_btn:
+                # 滚动到按钮可见
+                self.driver.execute_script("arguments[0].scrollIntoView(true);", write_btn)
+                time.sleep(0.5)
+                
+                # 点击按钮
+                write_btn.click()
+                logger.info("✓ 已点击写文章按钮")
+                
+                # 等待新窗口打开
+                time.sleep(2)
+                windows_after = len(self.driver.window_handles)
+                logger.info(f"点击后窗口数：{windows_after}")
+                
+                if windows_after > windows_before:
+                    logger.info("✓ 新标签页已打开")
+                else:
+                    logger.warning("⚠ 窗口数量未增加，可能在当前页打开")
+                
+                return True
+            
+            return False
         except Exception as e:
             logger.error(f"✗ 点击写文章按钮失败：{e}")
             return False

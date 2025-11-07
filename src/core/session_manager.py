@@ -74,16 +74,16 @@ class SessionManager:
             options = ChromeOptions()
             options.page_load_strategy = 'normal'
             
-            # New Headless 模式配置（优先级最高）
-            if self.headless_mode and not use_existing:
-                logger.info("启用 New Headless 模式")
-                options.add_argument('--headless=new')
-                options.add_argument('--disable-gpu')
-                options.add_argument('--no-sandbox')
-                options.add_argument('--disable-dev-shm-usage')
-                options.add_argument('--disable-popup-blocking')
-                options.add_argument('--disable-notifications')
-                options.add_argument('--window-size=1920,1080')
+            # # New Headless 模式配置（优先级最高）
+            # if self.headless_mode and not use_existing:
+            #     logger.info("启用 New Headless 模式")
+            #     options.add_argument('--headless=new')
+            #     options.add_argument('--disable-gpu')
+            #     options.add_argument('--no-sandbox')
+            #     options.add_argument('--disable-dev-shm-usage')
+            #     options.add_argument('--disable-popup-blocking')
+            #     options.add_argument('--disable-notifications')
+            #     options.add_argument('--window-size=1920,1080')
             
             if use_existing:
                 # 使用已存在的Chrome实例
@@ -117,13 +117,13 @@ class SessionManager:
                 options.add_argument('--start-maximized')
                 options.add_argument('--disable-blink-features=AutomationControlled')
                 
-                # 后台模式配置
-                if self.background_mode:
-                    logger.info("启用后台模式配置（新实例）")
-                    options.add_argument('--disable-popup-blocking')
-                    options.add_argument('--disable-notifications')
-                    options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    options.add_experimental_option('useAutomationExtension', False)
+                # # 后台模式配置
+                # if self.background_mode:
+                #     logger.info("启用后台模式配置（新实例）")
+                #     options.add_argument('--disable-popup-blocking')
+                #     options.add_argument('--disable-notifications')
+                #     options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                #     options.add_experimental_option('useAutomationExtension', False)
                 
                 logger.info("创建新的Chrome实例")
             

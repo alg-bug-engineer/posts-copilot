@@ -164,10 +164,12 @@ class CTO51Publisher(BasePublisher):
         """填充文章标题"""
         logger.info("填充文章标题...")
         try:
-            # 使用更精确的选择器：input[name="title"][id="title"]
+            # 等待标题输入框出现
             title_element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'input[name="title"][id="title"].title_input'))
+                EC.presence_of_element_located((By.ID, 'title'))
             )
+            
+            # 清空并填充标题
             title_element.clear()
             
             # 优先使用front matter中的标题
@@ -179,9 +181,15 @@ class CTO51Publisher(BasePublisher):
             # 清理标题中的引号
             title = self.clean_title(title)
             
+            # 标题最多100个字符
+            if len(title) > 100:
+                title = title[:100]
+                logger.warning("⚠ 标题超过100字符，已截断")
+            
             title_element.send_keys(title)
             logger.info(f"✓ 标题已填充：{title}")
             time.sleep(1)
+            
         except Exception as e:
             logger.error(f"✗ 填充标题失败：{e}")
             raise
@@ -193,17 +201,24 @@ class CTO51Publisher(BasePublisher):
             # 读取文章内容
             file_content = read_file_with_footer(article_path)
             
-            # 找到内容输入框 - 使用更精确的选择器
-            # textarea.auto-textarea-input.write-area
+            # 等待内容输入框出现并可交互
             content_element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'textarea.auto-textarea-input.write-area[placeholder="请输入正文"]'))
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'textarea.auto-textarea-input.write-area'))
             )
+            
+            # 滚动到元素可见
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", content_element)
+            time.sleep(0.5)
+            
+            # 清空并填充内容
             content_element.clear()
+            time.sleep(0.3)
             content_element.send_keys(file_content)
             
             logger.info(f"✓ 内容已填充，长度：{len(file_content)}")
-            logger.info("等待15秒，让平台处理图片解析...")
+            logger.info("等待5秒，让平台处理图片解析...")
             time.sleep(5)  # 等待图片解析
+            
         except Exception as e:
             logger.error(f"✗ 填充内容失败：{e}")
             raise
@@ -227,20 +242,8 @@ class CTO51Publisher(BasePublisher):
         """填充发布设置"""
         logger.info("填充发布设置...")
         
-        # 1. 文章分类
-        self._select_article_type()
-        
-        # 2. 个人分类
-        self._select_personal_type()
-        
-        # 3. 标签
+        # 只填充标签，跳过其他设置
         self._fill_tags(front_matter)
-        
-        # 4. 摘要
-        self._fill_summary(front_matter)
-        
-        # 5. 话题
-        self._select_topic()
         
         logger.info("✓ 发布设置已填充完成")
     
@@ -306,7 +309,7 @@ class CTO51Publisher(BasePublisher):
             logger.warning(f"⚠ 选择个人分类失败：{e}")
     
     def _fill_tags(self, front_matter: Dict[str, Any]):
-        """填充标签"""
+        """填充标签（使用 Enter 键分隔）"""
         try:
             # 优先使用front matter中的标签
             if 'tags' in front_matter and front_matter['tags']:
@@ -325,36 +328,44 @@ class CTO51Publisher(BasePublisher):
             
             logger.info(f"填充标签：{tags}")
             
-            # 找到标签输入框 - 使用 CSS 选择器
+            # 等待标签输入框出现并可交互
             tag_input = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'input.tag-paper.pull-tag[id="tag-input"]'))
+                EC.element_to_be_clickable((By.ID, 'tag-input'))
             )
             
-            # 清空已有的标签（如果有）
-            try:
-                tag_list_div = tag_input.find_element(By.XPATH, 'preceding-sibling::div')
-                self.driver.execute_script("arguments[0].innerHTML = '';", tag_list_div)
-                time.sleep(1)
-            except:
-                pass  # 如果没有已有标签，忽略错误
+            # 滚动到元素可见
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", tag_input)
+            time.sleep(0.5)
+            
+            # 点击输入框确保焦点
+            tag_input.click()
+            time.sleep(0.5)
             
             # 逐个添加标签
-            for tag in tags:
+            for i, tag in enumerate(tags):
                 # 每个标签最多20个字符
                 if len(tag) > 20:
                     tag = tag[:20]
                     logger.warning(f"⚠ 标签 '{tag}' 长度超过20字符，已截断")
                 
+                # 清空输入框
                 tag_input.clear()
+                time.sleep(0.3)
+                
+                # 输入标签内容
                 tag_input.send_keys(tag)
-                time.sleep(0.5)
+                time.sleep(0.3)
+                
+                # 按 Enter 键确认
                 tag_input.send_keys(Keys.ENTER)
-                logger.info(f"  ✓ 已添加标签：{tag}")
+                logger.info(f"  ✓ 已添加标签 {i+1}/{len(tags)}：{tag}")
                 time.sleep(0.5)
             
-            logger.info(f"✓ 已填充 {len(tags)} 个标签")
+            logger.info(f"✓ 成功填充 {len(tags)} 个标签")
+            
         except Exception as e:
             logger.warning(f"⚠ 填充标签失败：{e}")
+            # 非关键步骤，失败也继续
     
     def _fill_summary(self, front_matter: Dict[str, Any]):
         """填充摘要"""
@@ -410,13 +421,50 @@ class CTO51Publisher(BasePublisher):
         """最终发布"""
         logger.info("执行最终发布...")
         try:
-            # 使用 CSS 选择器：button.release[id="submitForm"]
-            publish_button = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.release[id="submitForm"]'))
-            )
-            publish_button.click()
-            logger.info("✓ 已点击最终发布按钮")
-            time.sleep(3)
+            # 等待页面加载完成
+            time.sleep(2)
+            
+            # 尝试多种方式定位发布按钮
+            publish_button = None
+            
+            try:
+                # 方式1: 通过 ID
+                publish_button = WebDriverWait(self.driver, 5).until(
+                    EC.element_to_be_clickable((By.ID, 'submitForm'))
+                )
+                logger.info("✓ 通过 ID 找到发布按钮")
+            except:
+                try:
+                    # 方式2: 通过 class name
+                    publish_button = WebDriverWait(self.driver, 5).until(
+                        EC.element_to_be_clickable((By.CLASS_NAME, 'release'))
+                    )
+                    logger.info("✓ 通过 class name 找到发布按钮")
+                except:
+                    try:
+                        # 方式3: 通过 XPath 文本
+                        publish_button = WebDriverWait(self.driver, 5).until(
+                            EC.element_to_be_clickable((By.XPATH, '//button[contains(text(), "发布")]'))
+                        )
+                        logger.info("✓ 通过 XPath 找到发布按钮")
+                    except:
+                        logger.error("✗ 无法找到发布按钮")
+                        raise Exception("无法定位发布按钮")
+            
+            if publish_button:
+                # 滚动到按钮可见
+                self.driver.execute_script("arguments[0].scrollIntoView(true);", publish_button)
+                time.sleep(0.5)
+                
+                # 点击发布
+                publish_button.click()
+                logger.info("✓ 已点击最终发布按钮")
+                time.sleep(3)
+                
+                return True
+            
+            return False
+            
         except Exception as e:
             logger.error(f"✗ 最终发布失败：{e}")
             raise

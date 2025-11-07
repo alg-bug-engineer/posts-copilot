@@ -175,23 +175,33 @@ class EnhancedContentGenerator:
    - 从宏观改为微观，或反之
 3. 使用完全不同的表达方式和结构
 4. 保持核心信息但换一种说法
-5. 长度15-35字
-6. 体现量子位风格但不拘泥于固定模式
+
+【严格格式要求】：
+1. 长度限制：**必须在25个汉字以内**（不含标点符号）
+2. 格式规范：
+   - 不要使用引号（""、''、「」等）
+   - 不要使用多余的空格
+   - 不要使用特殊符号（除了必要的标点）
+   - 标点符号使用中文标点（，。！？）
+3. 风格要求：
+   - 简洁有力，一句话说清楚
+   - 吸引眼球但不夸张
+   - 体现量子位风格但不拘泥于固定模式
 
 标题改写示例：
 原标题："Kimi K2 Thinking突袭！智能体&推理能力超GPT-5"
-创新改写：
-- "月之暗面放大招：K2模型推理实力碾压GPT-5"
-- "国产AI新突破！Kimi K2让智能体能力跃升一个档次"
-- "不只是模型升级：Kimi K2如何重新定义AI推理？"
+创新改写（25字内）：
+- "月之暗面K2模型推理实力碾压GPT-5"
+- "国产AI突破！Kimi K2让智能体能力跃升"
+- "Kimi K2重新定义AI推理能力"
 
 原标题："马斯克1万亿美元薪酬方案获批！"
-创新改写：
-- "史上最贵打工人！马斯克薪酬包价值破万亿美元"
-- "特斯拉股东通过：给马斯克发1万亿薪水"
-- "万亿薪酬背后：马斯克要完成的地狱级OKR"
+创新改写（25字内）：
+- "史上最贵打工人！马斯克薪酬破万亿美元"
+- "特斯拉股东通过马斯克万亿薪酬方案"
+- "马斯克万亿薪酬背后的地狱级OKR"
 
-请输出一个创新性强、与原标题差异明显的新标题："""
+请输出一个创新性强、符合格式要求、25字以内的新标题（只输出标题，不要其他内容）："""
         
         try:
             response = self.client.chat.completions.create(
@@ -201,8 +211,24 @@ class EnhancedContentGenerator:
             )
             
             new_title = response.choices[0].message.content.strip()
-            # 清理可能的引号
-            new_title = new_title.strip('"\'""''')
+            
+            # 清理标题格式
+            new_title = self._clean_title(new_title)
+            
+            # 验证标题长度（不超过25个汉字）
+            title_length = len([c for c in new_title if '\u4e00' <= c <= '\u9fff'])
+            if title_length > 25:
+                print(f"  ⚠️ 标题过长（{title_length}字），截断到25字...")
+                # 保留前25个汉字及其后的标点
+                char_count = 0
+                result = []
+                for c in new_title:
+                    if '\u4e00' <= c <= '\u9fff':
+                        char_count += 1
+                        if char_count > 25:
+                            break
+                    result.append(c)
+                new_title = ''.join(result).rstrip()
             
             # 验证标题差异度（简单检查）
             # 如果新标题和原标题相似度太高，重试一次
@@ -213,17 +239,39 @@ class EnhancedContentGenerator:
                     messages=[
                         {"role": "user", "content": prompt},
                         {"role": "assistant", "content": new_title},
-                        {"role": "user", "content": "这个标题和原标题太相似了，请生成一个完全不同角度的标题，改变表达方式和结构"}
+                        {"role": "user", "content": "这个标题和原标题太相似了，请生成一个完全不同角度的标题，改变表达方式和结构，记住：25字以内，不要引号和空格"}
                     ],
                     temperature=0.95
                 )
-                new_title = response.choices[0].message.content.strip().strip('"\'""''')
+                new_title = response.choices[0].message.content.strip()
+                new_title = self._clean_title(new_title)
             
             return new_title
             
         except Exception as e:
             print(f"  ⚠️ 标题生成失败，使用原标题: {e}")
             return original_title
+    
+    def _clean_title(self, title: str) -> str:
+        """
+        清理标题格式
+        - 去除引号
+        - 去除多余空格
+        - 去除特殊符号
+        """
+        import re
+        
+        # 去除各种引号
+        title = title.strip('"\'""''「」『』《》')
+        
+        # 去除所有空格
+        title = title.replace(' ', '')
+        
+        # 去除多余的标点符号
+        # 保留中文标点：，。！？：；
+        # title = re.sub(r'[^\u4e00-\u9fff\w，。！？：；、]', '', title)
+        
+        return title.strip()
     
     def _calculate_similarity(self, text1: str, text2: str) -> float:
         """

@@ -1,219 +1,435 @@
-# 多平台博客自动发布工具 🚀
+# 多平台博客自动发布工具 🚀# 多平台博客自动发布工具 🚀
 
-[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+
+[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 [![GitHub stars](https://img.shields.io/github/stars/your-username/posts-copilot.svg)](https://github.com/your-username/posts-copilot/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/your-username/posts-copilot.svg)](https://github.com/your-username/posts-copilot/issues)
 
-一键将你的技术文章发布到多个平台！支持 CSDN、掘金、知乎、51CTO、阿里云开发者社区、今日头条、微信公众号等主流技术平台的自动化发布。
+一键将技术文章发布到多个平台！支持 CSDN、掘金、知乎、51CTO、阿里云开发者社区、今日头条、微信公众号等主流技术平台的自动化发布。[![GitHub issues](https://img.shields.io/github/issues/your-username/posts-copilot.svg)](https://github.com/your-username/posts-copilot/issues)
 
-## ✨ 核心特性
 
-- 🎯 **多平台支持**：一次写作，多处发布，覆盖 7+ 主流技术平台
-- 🤖 **智能登录管理**：自动保存和恢复登录状态，告别重复登录烦恼  
+
+## ✨ 核心特性一键将你的技术文章发布到多个平台！支持 CSDN、掘金、知乎、51CTO、阿里云开发者社区、今日头条、微信公众号等主流技术平台的自动化发布。
+
+
+
+- 🎯 **多平台支持** - 一次写作，多处发布## ✨ 核心特性
+
+- 🤖 **智能登录管理** - 自动保存登录状态
+
+- 📝 **Markdown 支持** - 完美支持 Markdown 格式- 🎯 **多平台支持**：一次写作，多处发布，覆盖 7+ 主流技术平台
+
+- 🎨 **AI 内容生成** - 集成智谱 AI（可选）- 🤖 **智能登录管理**：自动保存和恢复登录状态，告别重复登录烦恼  
+
 - 📝 **Markdown 原生支持**：完美支持 Markdown 格式和 Front Matter 元数据
-- 🔧 **灵活配置系统**：支持标签、分类、封面图等个性化设置
+
+## 🌟 支持平台- 🔧 **灵活配置系统**：支持标签、分类、封面图等个性化设置
+
 - 📊 **详细日志记录**：完善的日志系统，便于调试和问题追踪
-- 🏗️ **可扩展架构**：基于抽象类设计，轻松添加新平台支持
-- 🎨 **AI 内容生成**：集成智谱 AI，支持热点新闻内容自动生成（可选）
 
-## 🌟 支持平台
+| 平台 | 状态 | 平台 | 状态 |- 🏗️ **可扩展架构**：基于抽象类设计，轻松添加新平台支持
 
-| 平台 | 状态 | 功能特点 |
+|------|------|------|------|- 🎨 **AI 内容生成**：集成智谱 AI，支持热点新闻内容自动生成（可选）
+
+| CSDN | ✅ | 掘金 | ✅ |
+
+| 知乎 | ✅ | 51CTO | ✅ |## 🌟 支持平台
+
+| 阿里云 | ✅ | 今日头条 | ✅ |
+
+| 微信公众号 | ✅ | - | - || 平台 | 状态 | 功能特点 |
+
 |------|------|----------|
-| [CSDN](https://blog.csdn.net/) | ✅ 已支持 | 标签、分类、封面图 |
+
+## 🚀 快速开始| [CSDN](https://blog.csdn.net/) | ✅ 已支持 | 标签、分类、封面图 |
+
 | [掘金](https://juejin.cn/) | ✅ 已支持 | 标签、专栏、封面图 |
-| [知乎](https://zhihu.com/) | ✅ 已支持 | 话题标签、封面图 |
+
+### 1. 环境准备| [知乎](https://zhihu.com/) | ✅ 已支持 | 话题标签、封面图 |
+
 | [51CTO](https://blog.51cto.com/) | ✅ 已支持 | 分类、标签 |
-| [阿里云开发者社区](https://developer.aliyun.com/) | ✅ 已支持 | 标签、分类 |
-| [今日头条](https://www.toutiao.com/) | ✅ 已支持 | 标签、封面图 |
-| [微信公众号](https://mp.weixin.qq.com/) | ✅ 已支持 | 保存草稿 |
+
+```bash| [阿里云开发者社区](https://developer.aliyun.com/) | ✅ 已支持 | 标签、分类 |
+
+# 克隆项目| [今日头条](https://www.toutiao.com/) | ✅ 已支持 | 标签、封面图 |
+
+git clone https://github.com/your-username/posts-copilot.git| [微信公众号](https://mp.weixin.qq.com/) | ✅ 已支持 | 保存草稿 |
+
+cd posts-copilot
 
 ## 📋 目录
 
-- [快速开始](#-快速开始)
-- [安装部署](#-安装部署)
-- [使用指南](#-使用指南)
-- [配置说明](#️-配置说明)
-- [扩展开发](#-扩展开发)
-- [常见问题](#-常见问题)
-- [贡献指南](#-贡献指南)
+# 安装依赖
 
-## � 快速开始
+pip install -r requirements.txt- [快速开始](#-快速开始)
+
+```- [安装部署](#-安装部署)
+
+- [使用指南](#-使用指南)
+
+### 2. 启动 Chrome 调试模式- [配置说明](#️-配置说明)
+
+- [扩展开发](#-扩展开发)
+
+```bash- [常见问题](#-常见问题)
+
+# macOS- [贡献指南](#-贡献指南)
+
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+
+  --remote-debugging-port=9222 \## � 快速开始
+
+  --user-data-dir="/tmp/chrome_dev"
 
 ### 1️⃣ 环境准备
 
-确保你的系统已安装：
+# Linux
+
+google-chrome --remote-debugging-port=9222 --user-data-dir="/tmp/chrome_dev"确保你的系统已安装：
+
 - Python 3.7 或更高版本
-- Google Chrome 浏览器
 
-### 2️⃣ 克隆项目
+# Windows- Google Chrome 浏览器
 
-```bash
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\temp\chrome_dev"
+
+```### 2️⃣ 克隆项目
+
+
+
+或使用快捷脚本：```bash
+
 git clone https://github.com/your-username/posts-copilot.git
-cd posts-copilot
-```
+
+```bashcd posts-copilot
+
+# macOS/Linux```
+
+bash scripts/start_chrome.sh
 
 ### 3️⃣ 安装依赖
 
-```bash
-pip install -r requirements.txt
+# 停止 Chrome
+
+bash scripts/stop_chrome.sh```bash
+
+```pip install -r requirements.txt
+
 ```
+
+### 3. 配置
 
 ### 4️⃣ 启动 Chrome 调试模式
 
 ```bash
-# macOS
+
+# 复制配置示例```bash
+
+cp config/common.yaml.example config/common.yaml# macOS
+
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9222 \
-  --user-data-dir="/tmp/chrome_dev"
 
-# Linux  
-google-chrome --remote-debugging-port=9222 --user-data-dir="/tmp/chrome_dev"
+# 编辑配置（设置文章目录等）  --remote-debugging-port=9222 \
 
-# Windows
-"C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\temp\chrome_dev"
+vim config/common.yaml  --user-data-dir="/tmp/chrome_dev"
+
 ```
 
-### 5️⃣ 运行发布
+# Linux  
+
+### 4. 发布文章google-chrome --remote-debugging-port=9222 --user-data-dir="/tmp/chrome_dev"
+
+
+
+```bash# Windows
+
+# 单篇发布"C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\temp\chrome_dev"
+
+python publish.py```
+
+
+
+# 批量发布### 5️⃣ 运行发布
+
+python batch_publish.py
 
 ```bash
-python publish.py
+
+# 自动化内容生成 + 发布python publish.py
+
+python auto_publish_pipeline.py```
+
 ```
 
 按照提示选择文章和平台，首次使用需要手动登录各个平台（登录状态会自动保存）。
 
+## 📖 文章格式
+
 > 💡 **提示**：详细安装和配置说明请查看 [安装部署](#-安装部署) 章节。
+
+支持标准 Markdown，可添加 Front Matter 元数据：
 
 ## � 安装部署
 
-### 环境要求
+```markdown
 
-| 组件 | 版本要求 | 说明 |
-|------|----------|------|
-| Python | 3.7+ | 推荐使用 3.8+ |
-| Chrome | 最新版 | 用于自动化操作 |
-| ChromeDriver | 自动匹配 | 可选，工具会自动管理 |
+---### 环境要求
 
-### 详细安装步骤
+title: 文章标题
 
-1. **克隆项目**
-   ```bash
+description: 文章描述| 组件 | 版本要求 | 说明 |
+
+tags: [Python, 自动化]|------|----------|------|
+
+category: 技术分享| Python | 3.7+ | 推荐使用 3.8+ |
+
+cover: https://example.com/cover.jpg| Chrome | 最新版 | 用于自动化操作 |
+
+---| ChromeDriver | 自动匹配 | 可选，工具会自动管理 |
+
+
+
+# 文章正文### 详细安装步骤
+
+
+
+这里是 Markdown 内容...1. **克隆项目**
+
+```   ```bash
+
    git clone https://github.com/your-username/posts-copilot.git
-   cd posts-copilot
+
+## 🤖 AI 内容生成（可选）   cd posts-copilot
+
    ```
-
-2. **创建虚拟环境（推荐）**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Linux/macOS
-   # 或
-   venv\Scripts\activate  # Windows
-   ```
-
-3. **安装依赖**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **配置文件设置**
-   
-   复制示例配置文件并根据需要修改：
-   ```bash
-   # 复制通用配置
-   cp config/common.yaml.example config/common.yaml
-   
-   # 编辑配置文件，设置文章目录等
-   vim config/common.yaml
-   ```
-
-5. **首次运行**
-   ```bash
-   python publish.py
-   ```
-
-## 📖 使用指南
-
-### 基本使用流程
-
-1. **准备文章**：将 Markdown 文章放在指定目录
-2. **启动 Chrome 调试模式**：运行调试命令启动 Chrome
-3. **运行发布脚本**：执行 `python publish.py`（单篇）或 `python batch_publish.py`（批量）
-4. **选择文章和平台**：按提示进行选择
-5. **首次登录**：首次使用需要手动登录各平台（会自动保存登录状态）
-6. **自动发布**：等待程序自动完成发布流程
-
-### 📦 批量并发发布（新功能）
-
-一次性将多篇文章并发发布到多个平台：
 
 ```bash
-# 基本使用（默认并发数3）
+
+# 设置智谱 AI Key2. **创建虚拟环境（推荐）**
+
+export ZHIPUAI_API_KEY="your-api-key"   ```bash
+
+   python -m venv venv
+
+# 生成热点文章   source venv/bin/activate  # Linux/macOS
+
+python generate/auto_content_pipeline.py --article-limit 5   # 或
+
+   venv\Scripts\activate  # Windows
+
+# 自动发布生成的文章   ```
+
 python batch_publish.py
 
-# 自定义并发数
-python batch_publish.py --workers 6
+```3. **安装依赖**
 
-# 演练模式（查看计划但不发布）
-python batch_publish.py --dry-run
+   ```bash
+
+## 📁 项目结构   pip install -r requirements.txt
+
+   ```
+
 ```
 
-**工作原理**：
-- 循环处理每篇文章（如有10篇文章，循环10次）
-- 每篇文章并发发布到多个平台（如6个平台同时发布）
-- 使用线程池实现快速切换，比顺序发布快2-3倍
+posts-copilot/4. **配置文件设置**
 
-详细说明请查看：[批量发布使用指南](docs/BATCH_PUBLISH.md)
+├── src/                    # 核心源代码   
 
-### 文章格式要求
+│   ├── core/              # 核心功能（日志、会话）   复制示例配置文件并根据需要修改：
 
-支持标准 Markdown 格式，可在文章开头添加 Front Matter 元数据：
+│   ├── publisher/         # 各平台发布器   ```bash
 
-```markdown
----
-title: 文章标题
-description: 文章描述  
-tags: [Python, 自动化, 工具]
-category: 技术分享
-cover: https://example.com/cover.jpg
----
+│   └── utils/             # 工具函数   # 复制通用配置
 
-# 文章正文
+├── config/                # 配置文件   cp config/common.yaml.example config/common.yaml
 
-你的 Markdown 内容...
-```
+├── generate/              # AI 内容生成   
 
-### 平台特定配置
+├── scripts/               # 辅助脚本   # 编辑配置文件，设置文章目录等
 
-每个平台都有独立的配置文件，支持个性化设置：
+├── docs/                  # 文档   vim config/common.yaml
 
-- `config/csdn.yaml` - CSDN 相关配置
-- `config/juejin.yaml` - 掘金相关配置  
-- `config/zhihu.yaml` - 知乎相关配置
-- 等等...
+├── tests/                 # 测试文件   ```
+
+├── publish.py             # 单篇发布
+
+├── batch_publish.py       # 批量发布5. **首次运行**
+
+└── auto_publish_pipeline.py  # 自动化流水线   ```bash
+
+```   python publish.py
+
+   ```
 
 ## ⚙️ 配置说明
 
+## 📖 使用指南
+
 ### 通用配置 (`config/common.yaml`)
 
+### 基本使用流程
+
 ```yaml
-# 文章目录配置
-content_dir: /path/to/your/articles/
 
-# Chrome 调试配置
-debugger_address: 127.0.0.1:9222
+# 文章目录1. **准备文章**：将 Markdown 文章放在指定目录
 
-# 发布模式
-auto_publish: false  # true=自动发布, false=需确认
+content_dir: /path/to/your/articles/2. **启动 Chrome 调试模式**：运行调试命令启动 Chrome
+
+3. **运行发布脚本**：执行 `python publish.py`（单篇）或 `python batch_publish.py`（批量）
+
+# Chrome 调试地址4. **选择文章和平台**：按提示进行选择
+
+debugger_address: 127.0.0.1:92225. **首次登录**：首次使用需要手动登录各平台（会自动保存登录状态）
+
+6. **自动发布**：等待程序自动完成发布流程
 
 # 平台开关
-enable:
+
+enable:### 📦 批量并发发布（新功能）
+
   csdn: true
-  juejin: true
+
+  juejin: true一次性将多篇文章并发发布到多个平台：
+
   zhihu: true
-  cto51: true
+
+  # ...更多平台```bash
+
+```# 基本使用（默认并发数3）
+
+python batch_publish.py
+
+### 平台配置
+
+# 自定义并发数
+
+每个平台有独立配置文件：python batch_publish.py --workers 6
+
+- `config/csdn.yaml` - CSDN 配置
+
+- `config/juejin.yaml` - 掘金配置# 演练模式（查看计划但不发布）
+
+- `config/zhihu.yaml` - 知乎配置python batch_publish.py --dry-run
+
+- 等等...```
+
+
+
+## 🛠️ 扩展开发**工作原理**：
+
+- 循环处理每篇文章（如有10篇文章，循环10次）
+
+基于 `BasePublisher` 抽象类可轻松添加新平台：- 每篇文章并发发布到多个平台（如6个平台同时发布）
+
+- 使用线程池实现快速切换，比顺序发布快2-3倍
+
+```python
+
+from src.publisher.base_publisher import BasePublisher详细说明请查看：[批量发布使用指南](docs/BATCH_PUBLISH.md)
+
+
+
+class NewPlatformPublisher(BasePublisher):### 文章格式要求
+
+    def publish(self, article_path: str) -> bool:
+
+        # 实现发布逻辑支持标准 Markdown 格式，可在文章开头添加 Front Matter 元数据：
+
+        pass
+
+``````markdown
+
+---
+
+详见：[开发文档](docs/DEVELOPMENT.md)title: 文章标题
+
+description: 文章描述  
+
+## 📚 文档tags: [Python, 自动化, 工具]
+
+category: 技术分享
+
+- [快速开始](docs/QUICKSTART.md)cover: https://example.com/cover.jpg
+
+- [安装指南](docs/INSTALLATION.md)---
+
+- [使用指南](docs/USAGE.md)
+
+- [批量发布](docs/BATCH_PUBLISH.md)# 文章正文
+
+- [内容生成](docs/CONTENT_GENERATION.md)
+
+- [开发指南](docs/DEVELOPMENT.md)你的 Markdown 内容...
+
+```
+
+## ❓ 常见问题
+
+### 平台特定配置
+
+**Q: 登录过期怎么办？**
+
+```bash每个平台都有独立的配置文件，支持个性化设置：
+
+rm data/cookies/平台名_cookies.pkl
+
+python publish.py  # 重新登录- `config/csdn.yaml` - CSDN 相关配置
+
+```- `config/juejin.yaml` - 掘金相关配置  
+
+- `config/zhihu.yaml` - 知乎相关配置
+
+**Q: Chrome 调试模式有什么用？**  - 等等...
+
+保持登录状态，避免反爬虫，支持手动干预（如验证码）。
+
+## ⚙️ 配置说明
+
+**Q: 支持 Windows 吗？**  
+
+完全支持，需要调整 Chrome 启动命令路径。### 通用配置 (`config/common.yaml`)
+
+
+
+更多问题：[文档](docs/)```yaml
+
+# 文章目录配置
+
+## 🤝 贡献content_dir: /path/to/your/articles/
+
+
+
+欢迎贡献！请查看 [CONTRIBUTING.md](CONTRIBUTING.md)# Chrome 调试配置
+
+debugger_address: 127.0.0.1:9222
+
+## 📄 许可证
+
+# 发布模式
+
+MIT License - 详见 [LICENSE](LICENSE)auto_publish: false  # true=自动发布, false=需确认
+
+
+
+## 📮 联系# 平台开关
+
+enable:
+
+- Issue: [GitHub Issues](../../issues)  csdn: true
+
+- 文档: [docs/](docs/)  juejin: true
+
+  zhihu: true
+
+---  cto51: true
+
   alicloud: true
-  toutiao: false
+
+**让博客发布变得简单而高效！** 🎉  toutiao: false
+
   wechat: false
 
 # 日志配置

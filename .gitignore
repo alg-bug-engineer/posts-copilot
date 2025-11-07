@@ -1,183 +1,364 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+# Byte-compiled / optimized / DLL files# Byte-compiled / optimized / DLL files
 
-# C extensions
-*.so
+__pycache__/__pycache__/
+
+*.py[cod]*.py[cod]
+
+*$py.class*$py.class
+
+
+
+# C extensions# C extensions
+
+*.so*.so
+
 posts
 data
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+
+# Distribution / packagingdata
+
+.Python# Distribution / packaging
+
+build/.Python
+
+develop-eggs/build/
+
+dist/develop-eggs/
+
+downloads/dist/
+
+eggs/downloads/
+
+.eggs/eggs/
+
+lib/.eggs/
+
+lib64/lib/
+
+parts/lib64/
+
+sdist/parts/
+
+var/sdist/
+
+wheels/var/
+
+pip-wheel-metadata/wheels/
+
+share/python-wheels/pip-wheel-metadata/
+
+*.egg-info/share/python-wheels/
+
+.installed.cfg*.egg-info/
+
+*.egg.installed.cfg
+
+MANIFEST*.egg
+
 MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
 
-# Installer logs
-pip-log.txt
+*.manifest# PyInstaller
+
+*.spec#  Usually these files are written by a python script from a template
+
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+
+# Installer logs*.manifest
+
+pip-log.txt*.spec
+
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
+# Installer logs
 
-# Translations
-*.mo
+# Unit test / coverage reportspip-log.txt
+
+htmlcov/pip-delete-this-directory.txt
+
+.tox/
+
+.nox/# Unit test / coverage reports
+
+.coveragehtmlcov/
+
+.coverage.*.tox/
+
+.cache.nox/
+
+nosetests.xml.coverage
+
+coverage.xml.coverage.*
+
+*.cover.cache
+
+*.py,covernosetests.xml
+
+.hypothesis/coverage.xml
+
+.pytest_cache/*.cover
+
+*.py,cover
+
+# Translations.hypothesis/
+
+*.mo.pytest_cache/
+
 *.pot
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+# Translations
 
-# Flask stuff:
-instance/
+# Django stuff:*.mo
+
+*.log*.pot
+
+local_settings.py
+
+db.sqlite3# Django stuff:
+
+db.sqlite3-journal*.log
+
+local_settings.py
+
+# Flask stuff:db.sqlite3
+
+instance/db.sqlite3-journal
+
 .webassets-cache
 
-# Scrapy stuff:
-.scrapy
+# Flask stuff:
 
-# Sphinx documentation
-docs/_build/
+# Scrapy stuff:instance/
 
-# PyBuilder
-target/
+.scrapy.webassets-cache
 
-# Jupyter Notebook
-.ipynb_checkpoints
 
-# IPython
-profile_default/
+
+# Sphinx documentation# Scrapy stuff:
+
+docs/_build/.scrapy
+
+
+
+# PyBuilder# Sphinx documentation
+
+target/docs/_build/
+
+
+
+# Jupyter Notebook# PyBuilder
+
+.ipynb_checkpointstarget/
+
+
+
+# IPython# Jupyter Notebook
+
+profile_default/.ipynb_checkpoints
+
 ipython_config.py
 
-# pyenv
-.python-version
+# IPython
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+# pyenvprofile_default/
+
+.python-versionipython_config.py
+
+
+
+# pipenv# pyenv
+
+#Pipfile.lock.python-version
+
+
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow# pipenv
+
+__pypackages__/#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
+# Celery stuff#   having no cross-platform support, pipenv may install dependencies that don't work, or not
 
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
+celerybeat-schedule#   install all needed dependencies.
 
-# SageMath parsed files
-*.sage.py
+celerybeat.pid#Pipfile.lock
 
-# Environments
-.env
-.venv
+
+
+# SageMath parsed files# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+
+*.sage.py__pypackages__/
+
+
+
+# Environments# Celery stuff
+
+.envcelerybeat-schedule
+
+.venvcelerybeat.pid
+
 env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
-# Spyder project settings
-.spyderproject
+venv/# SageMath parsed files
+
+ENV/*.sage.py
+
+env.bak/
+
+venv.bak/# Environments
+
+.env.local.env
+
+.env.development.venv
+
+.env.testenv/
+
+.env.productionvenv/
+
+ENV/
+
+# Spyder project settingsenv.bak/
+
+.spyderprojectvenv.bak/
+
 .spyproject
 
-# Rope project settings
-.ropeproject
+# Spyder project settings
 
-# mkdocs documentation
-/site
+# Rope project settings.spyderproject
 
-# mypy
-.mypy_cache/
+.ropeproject.spyproject
+
+
+
+# mkdocs documentation# Rope project settings
+
+/site.ropeproject
+
+
+
+# mypy# mkdocs documentation
+
+.mypy_cache//site
+
 .dmypy.json
-dmypy.json
 
-# Pyre type checker
+dmypy.json# mypy
+
+.mypy_cache/
+
+# Pyre type checker.dmypy.json
+
+.pyre/dmypy.json
+
+
+
+# ====== 项目特定忽略文件 ======# Pyre type checker
+
 .pyre/
 
-# ====== 项目特定忽略文件 ======
-
 # 配置文件（包含敏感信息）
-config/common.yaml
+
+config/common.yaml# ====== 项目特定忽略文件 ======
+
 config/*.yaml
+
+!config/*.yaml.example# 配置文件（包含敏感信息）
+
+config/api_keys.yamlconfig/common.yaml
+
+config/*_local.yamlconfig/*.yaml
+
 !config/*.yaml.example
 
 # 数据文件
-data/cookies/
-data/logs/
+
+data/# 数据文件
+
+posts/data/cookies/
+
+!posts/README.mddata/logs/
+
 data/last_published.txt
 
-# 用户文章目录
-posts/*.md
+# 调试文件
+
+debug_*.png# 用户文章目录
+
+debug_*.htmlposts/*.md
+
 !posts/README.md
 
-# 调试文件
-debug_*.png
-debug_*.html
-*.log
-
 # 备份文件
-*.bak
-*.backup
+
+*.bak# 调试文件
+
+*.backupdebug_*.png
+
+*.tmpdebug_*.html
+
+*~*.log
+
+
+
+# Chrome 用户数据目录# 备份文件
+
+/tmp/chrome_dev/*.bak
+
+C:/temp/chrome_dev/*.backup
+
 *~
 
-# Chrome 用户数据目录
-/tmp/chrome_dev/
-C:/temp/chrome_dev/
-
 # IDE 相关
-.vscode/
-.idea/
-*.swp
+
+.vscode/# Chrome 用户数据目录
+
+.idea//tmp/chrome_dev/
+
+*.swpC:/temp/chrome_dev/
+
 *.swo
 
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
+# IDE 相关
 
-# Windows
-Thumbs.db
-ehthumbs.db
+# macOS.vscode/
+
+.DS_Store.idea/
+
+.AppleDouble*.swp
+
+.LSOverride*.swo
+
+
+
+# Windows# macOS
+
+Thumbs.db.DS_Store
+
+ehthumbs.db.AppleDouble
+
+Desktop.ini.LSOverride
+
+
+
+# Distribution# Windows
+
+*.tar.gzThumbs.db
+
+*.zipehthumbs.db
+
 Desktop.ini
 
-# AI API Keys 和敏感配置
-.env
-.env.local
+# Keep directory structure
+
+!data/cookies/.gitkeep# AI API Keys 和敏感配置
+
+!data/logs/.gitkeep.env
+
+!data/generated/.gitkeep.env.local
+
 .env.development
 .env.test
 .env.production

@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 import requests
 import yaml
 
-from utils.yaml_file_utils import read_common
+from src.utils.yaml_file_utils import read_common
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
