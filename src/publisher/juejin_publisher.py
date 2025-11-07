@@ -255,7 +255,7 @@ class JuejinPublisher(BasePublisher):
             action_chains.key_down(cmd_ctrl).send_keys('v').key_up(cmd_ctrl).perform()
             
             logger.info("✓ 已粘贴文章内容，等待图片解析...")
-            time.sleep(15)  # 等待图片解析
+            time.sleep(5)  # 等待图片解析
             
             return True
         except Exception as e:
@@ -284,6 +284,9 @@ class JuejinPublisher(BasePublisher):
                 title = front_matter['title']
             else:
                 title = self.common_config.get('title', '未命名文章')
+            
+            # 清理标题中的引号
+            title = self.clean_title(title)
             
             title_input.send_keys(title)
             logger.info(f"✓ 已填充文章标题：{title}")

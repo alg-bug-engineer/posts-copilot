@@ -195,6 +195,8 @@ class ToutiaoPublisher(BasePublisher):
             
             # 优先使用front matter中的标题
             title = front_matter.get('title') or self.common_config.get('title', '未命名文章')
+            # 清理标题中的引号
+            title = self.clean_title(title)
             title_element.send_keys(title)
             
             logger.info(f"✓ 标题填充完成：{title}")

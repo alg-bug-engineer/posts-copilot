@@ -356,6 +356,9 @@ class WechatPublisher(BasePublisher):
                 logger.warning("未找到标题，使用默认值")
                 title = "未命名文章"
             
+            # 清理标题中的引号
+            title = self.clean_title(title)
+            
             title_element.clear()
             title_element.send_keys(title)
             logger.info(f"✓ 标题已填写：{title}")

@@ -43,7 +43,17 @@ class SessionManager:
         cookie_dir.mkdir(parents=True, exist_ok=True)
         self.cookie_file = cookie_dir / f"{platform}_cookies.pkl"
         
+        # 浏览器运行模式配置
+        self.background_mode = config.get('background_mode', True)  # 默认后台模式
+        self.headless_mode = config.get('headless_mode', False)  # 新无头模式（可选）
+        
         logger.info(f"初始化 {platform} 会话管理器，Cookie文件：{self.cookie_file}")
+        if self.headless_mode:
+            logger.info("浏览器模式: New Headless 模式（完全后台，无界面干扰）")
+        elif self.background_mode:
+            logger.info("浏览器模式: 后台模式（有界面但不切换）")
+        else:
+            logger.info("浏览器模式: 正常模式")
     
     def create_driver(self, use_existing: bool = True) -> webdriver.Chrome:
         """
@@ -64,12 +74,28 @@ class SessionManager:
             options = ChromeOptions()
             options.page_load_strategy = 'normal'
             
+            # New Headless 模式配置（优先级最高）
+            if self.headless_mode and not use_existing:
+                logger.info("启用 New Headless 模式")
+                options.add_argument('--headless=new')
+                options.add_argument('--disable-gpu')
+                options.add_argument('--no-sandbox')
+                options.add_argument('--disable-dev-shm-usage')
+                options.add_argument('--disable-popup-blocking')
+                options.add_argument('--disable-notifications')
+                options.add_argument('--window-size=1920,1080')
+            
             if use_existing:
                 # 使用已存在的Chrome实例
                 debugger_address = self.config.get('debugger_address')
                 if debugger_address:
+                    # 连接到现有实例时，只需要设置 debuggerAddress
+                    # 不要添加其他选项，因为实例已经启动了
                     options.add_experimental_option('debuggerAddress', debugger_address)
                     logger.info(f"连接到现有Chrome实例：{debugger_address}")
+                    
+                    if self.background_mode:
+                        logger.info("后台模式已启用（注意：连接现有实例时，需要在启动Chrome时配置后台选项）")
                     
                     # 增加连接超时时间
                     import socket
@@ -90,6 +116,15 @@ class SessionManager:
                 # 创建新的Chrome实例
                 options.add_argument('--start-maximized')
                 options.add_argument('--disable-blink-features=AutomationControlled')
+                
+                # 后台模式配置
+                if self.background_mode:
+                    logger.info("启用后台模式配置（新实例）")
+                    options.add_argument('--disable-popup-blocking')
+                    options.add_argument('--disable-notifications')
+                    options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                    options.add_experimental_option('useAutomationExtension', False)
+                
                 logger.info("创建新的Chrome实例")
             
             self.driver = webdriver.Chrome(service=service, options=options)

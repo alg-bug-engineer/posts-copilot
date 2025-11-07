@@ -138,10 +138,32 @@ python publish.py
 
 1. **准备文章**：将 Markdown 文章放在指定目录
 2. **启动 Chrome 调试模式**：运行调试命令启动 Chrome
-3. **运行发布脚本**：执行 `python publish.py`
+3. **运行发布脚本**：执行 `python publish.py`（单篇）或 `python batch_publish.py`（批量）
 4. **选择文章和平台**：按提示进行选择
 5. **首次登录**：首次使用需要手动登录各平台（会自动保存登录状态）
 6. **自动发布**：等待程序自动完成发布流程
+
+### 📦 批量并发发布（新功能）
+
+一次性将多篇文章并发发布到多个平台：
+
+```bash
+# 基本使用（默认并发数3）
+python batch_publish.py
+
+# 自定义并发数
+python batch_publish.py --workers 6
+
+# 演练模式（查看计划但不发布）
+python batch_publish.py --dry-run
+```
+
+**工作原理**：
+- 循环处理每篇文章（如有10篇文章，循环10次）
+- 每篇文章并发发布到多个平台（如6个平台同时发布）
+- 使用线程池实现快速切换，比顺序发布快2-3倍
+
+详细说明请查看：[批量发布使用指南](docs/BATCH_PUBLISH.md)
 
 ### 文章格式要求
 
@@ -271,12 +293,21 @@ posts-copilot/
 │   └── 📁 utils/            # 🛠️ 工具函数
 ├── 📁 config/               # ⚙️ 配置文件目录
 ├── 📁 generate/             # 🤖 AI 内容生成
+│   ├── aibase_crawler.py    # AIBase 新闻爬虫（默认）
+│   ├── qbitai_crawler.py    # 量子位新闻爬虫
+│   ├── reference_searcher.py # 参考资料搜索
+│   ├── enhanced_content_generator.py # 增强内容生成器
+│   ├── auto_content_pipeline.py # 自动化内容生成流水线
 │   ├── zhipu_content_generator.py # 智谱AI内容生成器
 │   └── zhipu_news_search.py # 热点新闻搜索
 ├── 📁 docs/                 # 📚 项目文档
+│   ├── NEWS_SOURCES.md      # 📰 多新闻源配置指南
+│   ├── CHROME_SCRIPTS_GUIDE.md # 🌐 Chrome 管理脚本
+│   └── ...                  # 其他文档
 ├── 📁 data/                 # 💾 数据存储
 │   ├── cookies/            # 🍪 登录状态保存
-│   └── logs/               # 📝 运行日志
+│   ├── logs/               # 📝 运行日志
+│   └── generated/          # 🤖 AI 生成的中间数据
 ├── 📁 posts/                # 📄 示例文章
 └── 📄 publish.py            # 🚀 主发布脚本
 ```
@@ -358,10 +389,14 @@ class NewPlatformPublisher(BasePublisher):
 - `retry_on_failure()` - 失败自动重试机制
 
 ### 🤖 AI 内容生成（可选）
+- **多新闻源支持**：支持 AIBase（默认）、量子位等多个新闻源
+- **智能爬虫**：自动抓取最新 AI 热点新闻
+- **参考搜索**：自动搜索相关参考资料
 - **智谱AI集成**：基于智谱AI的内容生成功能
-- **热点追踪**：自动搜索和分析热点新闻
-- **内容生成**：基于热点生成技术文章
+- **内容生成**：基于热点生成高质量技术文章
 - **自动发布**：生成内容可直接发布到各平台
+
+> 📘 详细使用指南：查看 [多新闻源配置指南](docs/NEWS_SOURCES.md)
 
 ## ❓ 常见问题
 

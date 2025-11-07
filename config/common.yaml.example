@@ -10,6 +10,25 @@ debugger_address: 127.0.0.1:9222
 # service_location: /usr/local/bin/chromedriver     # Linux
 # service_location: C:\chromedriver\chromedriver.exe  # Windows
 
+# 浏览器运行模式
+# background_mode: 后台模式（推荐，不会自动切换到浏览器窗口）
+#   true: 有界面但不干扰工作，适合批量发布
+#   false: 正常显示浏览器操作，适合调试和首次使用
+background_mode: true
+
+# headless_mode: New Headless 模式（完全无界面，Chrome 112+）
+#   true: 完全后台运行，不显示浏览器界面，不会窃取焦点
+#   false: 正常浏览器界面
+#   推荐场景：
+#     - 服务器环境无界面运行
+#     - 完全不希望看到浏览器的场景
+#     - 需要最低资源占用
+#   注意事项：
+#     - 仅在创建新浏览器实例时有效（use_existing=False）
+#     - 某些平台可能检测无头模式导致发布失败
+#     - 调试时建议关闭以便观察操作
+headless_mode: false
+
 # ====== 文章配置 ======
 # 文章存放目录（修改为你的文章目录）
 content_dir: /path/to/your/articles/

@@ -137,27 +137,77 @@ def parse_front_matter(content_file):
     return metadata
 
 def convert_md_to_html(md_filename, include_footer=True):
+    """
+    将 Markdown 文件转换为 HTML
+    
+    Args:
+        md_filename: Markdown 文件路径
+        include_footer: 是否包含页脚
+    
+    Returns:
+        HTML 文件路径
+    """
     # 获取文件名（不包含扩展名）和目录
-    base_name = os.path.splitext(md_filename)[0]
+    base_name = os.path.splitext(os.path.basename(md_filename))[0]
     directory = os.path.dirname(md_filename)
+    
+    # 确保目录存在
+    if not directory:
+        directory = os.getcwd()
 
-    # 构建输出的HTML文件名
-    html_filename = os.path.join(directory, base_name + str(include_footer) + '.html')
+    # 构建输出的HTML文件名（修复：不要将布尔值拼接到文件名中）
+    footer_suffix = '_with_footer' if include_footer else ''
+    html_filename = os.path.join(directory, base_name + footer_suffix + '.html')
 
     # 如果HTML文件已经存在，直接返回
     if os.path.exists(html_filename):
         return html_filename
+    
+    # 读取 Markdown 文件内容并移除 Front Matter
+    with open(md_filename, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # 移除 Front Matter（如果存在）
+    if content.startswith('---'):
+        parts = content.split('---', 2)
+        if len(parts) >= 3:
+            # Front Matter 存在，只保留正文部分
+            content = parts[2].strip()
+        else:
+            # 没有正确的 Front Matter 结构，保留原内容
+            pass
+    
+    # 创建临时 Markdown 文件（不含 Front Matter）
+    import tempfile
+    temp_md = tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.md', delete=False)
+    temp_md.write(content)
+    temp_md.close()
+    temp_md_path = temp_md.name
 
-    # 同一目录下另一个文件的路径
-    pandoc_css_path = os.path.join(script_dir, 'pandoc.css')
+    try:
+        # 同一目录下 CSS 文件的路径
+        pandoc_css_path = os.path.join(script_dir, 'pandoc.css')
 
-    # 构造pandoc命令
-    command = ['pandoc', '--standalone', '--css', pandoc_css_path, '-f', 'markdown', '-t', 'html5', '--no-highlight',
-               md_filename, '-o',
-               html_filename]
+        # 构造 pandoc 命令
+        command = [
+            'pandoc', 
+            '--standalone', 
+            '--css', pandoc_css_path, 
+            '-f', 'markdown', 
+            '-t', 'html5', 
+            '--no-highlight',
+            temp_md_path, 
+            '-o', html_filename
+        ]
 
-    # 调用系统命令
-    subprocess.run(command)
+        # 调用系统命令
+        subprocess.run(command, check=True)
+    finally:
+        # 删除临时文件
+        try:
+            os.unlink(temp_md_path)
+        except:
+            pass
 
     common_config = read_common()
     if include_footer:

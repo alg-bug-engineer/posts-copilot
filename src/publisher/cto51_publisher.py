@@ -176,6 +176,9 @@ class CTO51Publisher(BasePublisher):
             else:
                 title = self.common_config.get('title', '未命名文章')
             
+            # 清理标题中的引号
+            title = self.clean_title(title)
+            
             title_element.send_keys(title)
             logger.info(f"✓ 标题已填充：{title}")
             time.sleep(1)
@@ -200,7 +203,7 @@ class CTO51Publisher(BasePublisher):
             
             logger.info(f"✓ 内容已填充，长度：{len(file_content)}")
             logger.info("等待15秒，让平台处理图片解析...")
-            time.sleep(15)  # 等待图片解析
+            time.sleep(5)  # 等待图片解析
         except Exception as e:
             logger.error(f"✗ 填充内容失败：{e}")
             raise

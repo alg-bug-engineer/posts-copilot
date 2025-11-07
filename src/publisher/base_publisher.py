@@ -113,6 +113,33 @@ class BasePublisher(ABC):
             self.logger.error(f"解析文章元数据失败：{e}", exc_info=True)
             return {}
     
+    def clean_title(self, title: str) -> str:
+        """
+        清理标题，移除引号等不适合发布的字符
+        
+        Args:
+            title: 原始标题
+        
+        Returns:
+            str: 清理后的标题
+        """
+        if not title:
+            return title
+        
+        # 移除各种引号
+        # 双引号：" " " "
+        # 单引号：' ' ' '
+        cleaned = title.replace('"', '').replace('"', '').replace('"', '')
+        cleaned = cleaned.replace("'", '').replace("'", '').replace("'", '')
+        
+        # 去除首尾空格
+        cleaned = cleaned.strip()
+        
+        if cleaned != title:
+            self.logger.info(f"标题已清理：'{title}' -> '{cleaned}'")
+        
+        return cleaned
+    
     def read_article_content(self, article_path: str, include_footer: bool = True) -> str:
         """
         读取文章内容
