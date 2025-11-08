@@ -679,6 +679,10 @@ class WechatPublisher(BasePublisher):
                 # 登录成功后保存Cookie
                 logger.info("✓ 登录成功，保存登录状态...")
                 self.save_login_state(self.site_url)
+            else:
+                # 如果已经登录，更新cookies以保持同步
+                logger.debug("已登录状态，更新cookies...")
+                self.update_cookies(self.site_url)
             
             # 5. 点击图文消息按钮
             if not self._click_article_button():
@@ -710,6 +714,10 @@ class WechatPublisher(BasePublisher):
             if not self._save_as_draft():
                 logger.error("✗ 保存草稿失败")
                 return False
+            
+            # 保存成功后更新cookies
+            logger.debug("保存成功，更新cookies...")
+            self.update_cookies(self.site_url)
             
             logger.info(f"=" * 60)
             logger.info("✓ 微信公众号文章已保存为草稿")

@@ -434,6 +434,10 @@ class AlicloudPublisher(BasePublisher):
                 # 登录成功后保存Cookie
                 logger.info("✓ 登录成功，保存登录状态...")
                 self.save_login_state(self.site_url)
+            else:
+                # 如果已经登录，更新cookies以保持同步
+                logger.debug("已登录状态，更新cookies...")
+                self.update_cookies(self.site_url)
             
             # 5. 处理滑块验证（如果存在）
             logger.info("检查是否需要滑块验证...")
@@ -467,6 +471,10 @@ class AlicloudPublisher(BasePublisher):
             if not self._publish_article():
                 logger.error("✗ 发布文章失败")
                 return False
+            
+            # 发布成功后更新cookies
+            logger.debug("发布成功，更新cookies...")
+            self.update_cookies(self.site_url)
             
             logger.info("=" * 60)
             logger.info("✓ 文章发布成功！")

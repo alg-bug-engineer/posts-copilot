@@ -1,0 +1,70 @@
+# 信息挖掘助手配置
+
+# 研究深度配置
+research:
+  # 最大搜索轮数
+  max_iterations: 15
+  
+  # 每轮搜索的查询数量建议
+  queries_per_round: 1-2
+  
+  # 搜索策略
+  search_strategy:
+    - "基本概念和定义"
+    - "技术原理和实现"
+    - "发展历程和里程碑"
+    - "实际应用和案例"
+    - "行业影响和趋势"
+    - "挑战和未来展望"
+
+# 内容生成配置
+generation:
+  # 模型参数
+  model: "kimi-k2-thinking"
+  
+  # 搜索阶段温度（较低以确保准确性）
+  search_temperature: 0.7
+  
+  # 生成阶段温度（较高以增加创造性）
+  expert_temperature: 0.8
+  
+  # 最大 token 数
+  max_tokens: 32768
+
+# 输出配置
+output:
+  # 输出目录
+  directory: "../posts"
+  
+  # 文件名格式：{topic}_{timestamp}.md
+  filename_format: "{topic}_{timestamp}"
+  
+  # 时间戳格式
+  timestamp_format: "%Y%m%d_%H%M%S"
+  
+  # 是否在控制台显示完整内容
+  show_full_content: false
+  
+  # 预览内容长度
+  preview_length: 500
+
+# 工具配置
+tools:
+  # 启用的 Formula 工具
+  enabled:
+    - "moonshot/date:latest"
+    - "moonshot/web-search:latest"
+
+# 日志配置
+logging:
+  # 是否显示详细的思考过程
+  show_reasoning: true
+  
+  # 思考过程显示长度
+  reasoning_length: 200
+  
+  # 是否保存搜索历史
+  save_search_history: true
+  
+  # 搜索历史文件
+  search_history_file: "../data/generated/search_history.json"

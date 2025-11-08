@@ -35,7 +35,7 @@ ALL_PLATFORMS = [
     'cto51',
     # 'infoq',
     # 'txcloud',
-    'alicloud',
+    # 'alicloud',
     'toutiao',
     # 'wechat',  # 微信公众号（也支持 mpweixin）
 ]
@@ -251,8 +251,8 @@ def select_platform(current_article: str = None) -> str:
     print("5.  51CTO")
     # print("10. InfoQ")
     # print("11. 腾讯云")
-    print("6. 阿里云")
-    print("7. 今日头条")
+    # print("6. 阿里云")
+    print("6. 今日头条")
     # print("8. 微信公众号")
     print("0.  返回上一级（重新选择文章）")
     print("q.  退出程序")
@@ -270,8 +270,8 @@ def select_platform(current_article: str = None) -> str:
         '5': 'cto51',
         # '10': 'infoq',
         # '11': 'txcloud',
-        '6': 'alicloud',
-        '7': 'toutiao',
+        # '6': 'alicloud',
+        '6': 'toutiao',
         # '8': 'mpweixin',
         '0': 'back',
         'q': 'quit',

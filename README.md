@@ -758,6 +758,13 @@ tail -f data/logs/$(date +%Y-%m-%d).log
 
 查看 [CHANGELOG.md](docs/CHANGELOG.md) 了解详细更新历史。
 
+### v2.1.0 (2025-11-08)
+
+- 🍪 **Cookies 管理优化**：每个平台独立存储 cookies，避免冲突
+- 🔄 **自动同步机制**：实时更新 cookies，减少重复登录
+- 🛠️ **管理工具**：新增 cookies 管理脚本，支持备份、恢复、清理等操作
+- 📋 详细文档：[Cookies 优化文档](docs/COOKIES_OPTIMIZATION.md)
+
 ### v2.0.0 (2025-11-05)
 
 - 🎉 全新架构重构

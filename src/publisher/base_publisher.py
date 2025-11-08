@@ -68,7 +68,16 @@ class BasePublisher(ABC):
         Args:
             site_url: 网站URL
         """
-        self.session_manager.save_cookies(site_url)
+        self.session_manager.save_cookies(site_url, force_save=True)
+    
+    def update_cookies(self, site_url: str):
+        """
+        更新cookies - 在操作过程中同步最新的cookies
+        
+        Args:
+            site_url: 网站URL
+        """
+        self.session_manager.update_cookies(site_url)
     
     @abstractmethod
     def get_platform_name(self) -> str:

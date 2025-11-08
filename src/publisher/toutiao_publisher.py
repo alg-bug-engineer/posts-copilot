@@ -95,6 +95,10 @@ class ToutiaoPublisher(BasePublisher):
                 # 登录成功后保存Cookie
                 logger.info("✓ 登录成功，保存登录状态...")
                 self.save_login_state(self.site_url)
+            else:
+                # 如果已经登录，更新cookies以保持同步
+                logger.debug("已登录状态，更新cookies...")
+                self.update_cookies(self.site_url)
             
             # 5. 解析文章元数据
             front_matter = self.parse_article_metadata(article_path)
@@ -127,6 +131,10 @@ class ToutiaoPublisher(BasePublisher):
                     logger.error("✗ 最终发布失败")
                     return False
                 logger.info("✓ 文章发布成功！")
+                
+                # 发布成功后更新cookies
+                logger.debug("发布成功，更新cookies...")
+                self.update_cookies(self.site_url)
             else:
                 logger.info("⚠ 未启用自动发布，请手动点击发布按钮")
             

@@ -136,12 +136,13 @@ class SessionManager:
             logger.error(f"不支持的驱动类型：{driver_type}")
             raise ValueError(f"不支持的驱动类型：{driver_type}")
     
-    def save_cookies(self, url: Optional[str] = None):
+    def save_cookies(self, url: Optional[str] = None, force_save: bool = False):
         """
         保存当前会话的Cookies
         
         Args:
             url: 需要访问的URL（用于设置Cookie的域）
+            force_save: 是否强制保存（即使没有变化）
         """
         if not self.driver:
             logger.warning("驱动未初始化，无法保存Cookie")
@@ -157,6 +158,24 @@ class SessionManager:
                     time.sleep(2)
             
             cookies = self.driver.get_cookies()
+            
+            # 检查是否有变化（除非强制保存）
+            if not force_save and self.cookie_file.exists():
+                try:
+                    with open(self.cookie_file, 'rb') as f:
+                        old_cookies = pickle.load(f)
+                    
+                    # 简单比较cookies数量和内容
+                    if len(cookies) == len(old_cookies):
+                        # 比较关键cookie的值
+                        cookies_dict = {c['name']: c.get('value', '') for c in cookies}
+                        old_cookies_dict = {c['name']: c.get('value', '') for c in old_cookies}
+                        
+                        if cookies_dict == old_cookies_dict:
+                            logger.debug(f"Cookie无变化，跳过保存：{self.cookie_file}")
+                            return
+                except Exception as e:
+                    logger.warning(f"比较Cookie时出错，强制保存：{e}")
             
             # 保存cookies到文件
             with open(self.cookie_file, 'wb') as f:
@@ -245,6 +264,29 @@ class SessionManager:
         except Exception as e:
             logger.error(f"加载Cookie失败：{e}", exc_info=True)
             return False
+    
+    def update_cookies(self, url: Optional[str] = None):
+        """
+        更新cookies - 获取浏览器中的最新cookies并保存
+        用于在操作过程中保持cookies同步
+        
+        Args:
+            url: 需要访问的URL（用于设置Cookie的域）
+        """
+        if not self.driver:
+            logger.warning("驱动未初始化，无法更新Cookie")
+            return
+        
+        try:
+            current_cookies = self.driver.get_cookies()
+            if current_cookies:
+                # 强制保存最新的cookies
+                self.save_cookies(url, force_save=True)
+                logger.debug(f"已更新 {len(current_cookies)} 个Cookie")
+            else:
+                logger.warning("浏览器中没有Cookie可更新")
+        except Exception as e:
+            logger.error(f"更新Cookie失败：{e}", exc_info=True)
     
     def clear_cookies(self):
         """清除保存的Cookie文件"""
