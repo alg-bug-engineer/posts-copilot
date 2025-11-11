@@ -1,0 +1,230 @@
+# Kimi 内容自动生成系统 - 配置文件
+
+# ============================================================
+# 主题探索配置
+# ============================================================
+topic_exploration:
+  # 探索深度：从主题发散出多少个相关子主题
+  # 建议范围：8-15，太少覆盖不全，太多耗时过长
+  exploration_depth: 10
+  
+  # 探索策略：指导 AI 从哪些角度分析主题
+  strategies:
+    - "核心概念分析"
+    - "技术演进路径"
+    - "实战应用场景"
+    - "前沿研究方向"
+    - "常见问题和解决方案"
+
+# ============================================================
+# 教程大纲生成配置
+# ============================================================
+curriculum_generation:
+  # 每个教程系列的章节数量范围
+  # 建议：5-15 章，太少不够深入，太多读者难以坚持
+  min_chapters: 5
+  max_chapters: 15
+  
+  # 教程结构策略：定义不同难度级别的教学方式
+  structure:
+    beginner: "基础入门"       # 适合零基础读者
+    intermediate: "进阶实战"   # 需要一定基础
+    advanced: "深度原理"       # 深入技术细节
+    practice: "项目实战"       # 动手实践
+  
+  # 章节之间的逻辑关系
+  # "循序渐进"：前后依赖，需按顺序学习
+  # "主题独立"：各章节相对独立，可单独阅读
+  progression_style: "循序渐进"
+
+# ============================================================
+# 文章生成配置
+# ============================================================
+article_generation:
+  # 使用的 Kimi 模型
+  # 可选：kimi-k2-thinking（推荐，深度思考）
+  model: "kimi-k2-thinking"
+  
+  # 信息搜索配置
+  # max_search_rounds：每篇文章的最大搜索轮数
+  # 建议：10-15 轮，确保信息充分但不过度
+  max_search_rounds: 12
+  
+  # 温度参数：控制生成的随机性
+  # search_temperature：搜索阶段，较低保证准确性
+  # writing_temperature：写作阶段，稍高增加创造性
+  search_temperature: 0.7
+  writing_temperature: 0.8
+  
+  # 最大 token 数：单次生成的最大长度
+  max_tokens: 32768
+  
+  # 文章质量要求
+  # 字数范围：确保内容充实但不冗长
+  min_word_count: 3000
+  max_word_count: 8000
+  
+  # 引用格式：文章末尾的参考资料格式
+  # 可选：APA, MLA, Chicago, IEEE
+  citation_style: "简洁引用"
+
+# ============================================================
+# 存储配置
+# ============================================================
+storage:
+  # 数据库文件路径（相对于 kimi/ 目录）
+  topics_db: "data/topics_database.json"
+  curriculum_db: "data/curriculum_database.json"
+  generation_history: "data/tutorial_generation_history.json"
+  
+  # 文章输出目录（生成的 Markdown 文件存放位置）
+  articles_output: "data/articles"
+  
+  # 是否自动备份数据库（推荐开启）
+  auto_backup: true
+  backup_dir: "data/backups"
+
+# ============================================================
+# 输出格式配置
+# ============================================================
+output:
+  # Frontmatter 配置
+  frontmatter:
+    # 包含的字段
+    include_fields:
+      - title
+      - date
+      - author
+      - categories
+      - tags
+      - description
+      - series
+      - chapter
+      - difficulty
+      - estimated_reading_time
+    
+    # 默认作者名称
+    default_author: "AI技术专家"
+    
+    # 日期格式
+    date_format: "%Y-%m-%d"
+  
+  # 文件名配置
+  filename:
+    # 是否使用章节标题作为文件名（推荐）
+    use_title_as_name: true
+    
+    # 文件名最大长度
+    max_length: 100
+    
+    # 是否在重名时添加时间戳
+    add_timestamp_if_exists: true
+
+# ============================================================
+# 高级配置
+# ============================================================
+advanced:
+  # 请求间隔：避免请求过快被限流（秒）
+  request_interval: 5
+  
+  # 失败重试次数
+  max_retries: 3
+  
+  # 超时设置（秒）
+  timeout: 60
+  
+  # 是否显示详细日志
+  verbose: true
+  
+  # 是否在控制台显示搜索结果
+  show_search_results: false
+  
+  # 是否包含代码示例
+  include_code_examples: true
+  
+  # 是否包含图表说明
+  include_diagrams: true
+
+# 数据存储配置
+storage:
+  # 主题库文件
+  topics_db: "../data/generated/topics_database.json"
+  
+  # 教程大纲库
+  curriculum_db: "../data/generated/curriculum_database.json"
+  
+  # 生成历史记录
+  generation_history: "../data/generated/tutorial_generation_history.json"
+  
+  # 文章输出目录
+  articles_output: "../posts"
+
+# 自动化流程配置
+automation:
+  # 是否启用持续生成模式
+  continuous_mode: true
+  
+  # 每天生成的文章数量
+  articles_per_day: 2
+  
+  # 生成时间（24小时制）
+  generation_hours: [9, 15, 21]
+  
+  # 错误重试次数
+  max_retries: 3
+  
+  # 失败后等待时间（秒）
+  retry_delay: 60
+
+# 内容质量控制
+quality_control:
+  # 是否启用重复检测
+  check_duplicates: true
+  
+  # 相似度阈值（0-1）
+  similarity_threshold: 0.85
+  
+  # 是否需要人工审核
+  require_review: false
+  
+  # 关键词密度检查
+  check_keyword_density: true
+
+# API配置
+api:
+  base_url: "https://api.moonshot.cn/v1"
+  # API密钥通过环境变量 MOONSHOT_API_KEY 获取
+  
+  # 速率限制
+  rate_limit:
+    requests_per_minute: 20
+    requests_per_hour: 500
+
+# 日志配置
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  save_logs: true
+  log_file: "../data/logs/tutorial_generator.log"
+  show_reasoning: true
+  reasoning_preview_length: 200
+
+# Markdown模板配置
+markdown_template:
+  # frontmatter模板
+  frontmatter:
+    title: "{title}"
+    date: "{date}"
+    description: "{description}"
+    tags: "{tags}"
+    series: "{series}"
+    chapter: "{chapter}"
+    difficulty: "{difficulty}"
+  
+  # 文章结构
+  structure:
+    - "标题和frontmatter"
+    - "引言（吸引读者）"
+    - "核心内容（多级标题）"
+    - "实战案例（如适用）"
+    - "总结和思考"
+    - "参考资源"

@@ -244,6 +244,13 @@ class ToutiaoPublisher(BasePublisher):
             content_element = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '//div[@class="publish-editor"]//div[@class="ProseMirror"]'))
             )
+            
+            # 首先点击两次正文区域的空白位置（激活编辑器）
+            logger.info("第一次点击正文区域...")
+            content_element.click()
+            time.sleep(0.5)
+            
+            logger.info("第二次点击正文区域...")
             content_element.click()
             time.sleep(1)
             
