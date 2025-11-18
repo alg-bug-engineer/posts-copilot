@@ -57,7 +57,7 @@ article_generation:
   writing_temperature: 0.8
   
   # 最大 token 数：单次生成的最大长度
-  max_tokens: 32768
+  max_tokens: 64000
   
   # 文章质量要求
   # 字数范围：确保内容充实但不冗长
@@ -104,7 +104,7 @@ output:
       - estimated_reading_time
     
     # 默认作者名称
-    default_author: "AI技术专家"
+    default_author: "芝士AI吃鱼"
     
     # 日期格式
     date_format: "%Y-%m-%d"
